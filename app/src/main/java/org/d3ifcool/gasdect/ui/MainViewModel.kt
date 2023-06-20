@@ -2,12 +2,14 @@ package org.d3ifcool.gasdect.ui
 
 import android.util.Log
 import androidx.lifecycle.*
+import kotlinx.coroutines.launch
+import org.d3ifcool.gasdect.SettingPreferences
 import org.d3ifcool.gasdect.api.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel() : ViewModel() {
+class MainViewModel(private val pref: SettingPreferences) : ViewModel() {
 
     private val _intValue = MutableLiveData<Int>()
     val intValue: LiveData<Int> = _intValue
@@ -47,5 +49,11 @@ class MainViewModel() : ViewModel() {
                 Log.e("testo", "onFailuree: ${t.message.toString()}")
             }
         })
+    }
+
+    fun deleteTokenPref() {
+        viewModelScope.launch {
+            pref.deleteToken()
+        }
     }
 }
