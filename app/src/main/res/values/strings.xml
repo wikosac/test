@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GasDect</string>
+    <string name="gas_caption">Gas Value (ppm) :</string>
+    <string name="not_connected">Device is not connected!</string>
+
+    <string name="notif_title">Gas Bocor!</string>
+    <string name="notif_message">Kebocoran gas terdeteksi!!</string>
+    <string name="notif_channel_id" translatable="false">alert</string>
+    <string name="notif_channel_name">Alert</string>
+    <string name="notif_channel_desc">Reminder check-in tiap beberapa jam.
+</string>
+</resources>
