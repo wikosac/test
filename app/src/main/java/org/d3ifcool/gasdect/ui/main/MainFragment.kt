@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.gasdect.R
 import org.d3ifcool.gasdect.databinding.FragmentMainBinding
@@ -60,24 +61,27 @@ class MainFragment : Fragment() {
     }
 
     private fun run() {
-        val timer = Timer()
-        timer.scheduleAtFixedRate(object : TimerTask() {
+        val handler = Handler(Looper.getMainLooper())
+        handler.post(object : Runnable {
             override fun run() {
                 viewModel.getIntValue()
-                Handler(Looper.getMainLooper()).post {
-                    viewModel.intValue.observe(viewLifecycleOwner) {
-                        binding.tvValue.text = it.toString()
-                        binding.tvValue.setTextColor(
-                            if (it > 400) Color.RED else Color.BLACK
-                        )
-                        if (it > 400) {
+
+                val fragmentView = view
+                if (fragmentView != null) {
+                    viewModel.intValue.observe(viewLifecycleOwner) { value ->
+                        binding.tvValue.text = value.toString()
+                        binding.tvValue.setTextColor(if (value > 400) Color.RED else Color.BLACK)
+                        if (value > 400) {
                             tampilNotifikasi()
                         }
                     }
                 }
+
+                handler.postDelayed(this, 1000)
             }
-        }, 0, 1000)
+        })
     }
+
 
     private fun tampilNotifikasi() {
         val notificationManager = ContextCompat.getSystemService(
@@ -108,7 +112,7 @@ class MainFragment : Fragment() {
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_histori) {
-            //nav to list
+            findNavController().navigate(R.id.action_mainFragment_to_historiFragment)
             return true
         }
         return super.onOptionsItemSelected(item)
