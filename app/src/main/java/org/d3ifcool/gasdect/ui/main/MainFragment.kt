@@ -1,39 +1,52 @@
-package org.d3ifcool.gasdect.ui
+package org.d3ifcool.gasdect.ui.main
 
 import android.app.NotificationManager
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.activity.viewModels
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.gasdect.R
-import org.d3ifcool.gasdect.databinding.ActivityMainBinding
+import org.d3ifcool.gasdect.databinding.FragmentMainBinding
 import org.d3ifcool.gasdect.notify.NoificationUtils.sendNotification
+import org.d3ifcool.gasdect.ui.MainViewModel
 import org.d3ifcool.gasdect.ui.auth.AuthActivity
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainFragment : Fragment() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: FragmentMainBinding
     private lateinit var user: FirebaseAuth
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(requireActivity())[MainViewModel::class.java]
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        setHasOptionsMenu(true)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         user = FirebaseAuth.getInstance()
         viewModel.isConnected()
-        viewModel.boolValue.observe(this) {
+        viewModel.boolValue.observe(viewLifecycleOwner) {
             if (it == true) {
                 run()
             } else {
@@ -42,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.logoutButton.setOnClickListener {
-           confirmLogout()
+            confirmLogout()
         }
     }
 
@@ -52,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             override fun run() {
                 viewModel.getIntValue()
                 Handler(Looper.getMainLooper()).post {
-                    viewModel.intValue.observe(this@MainActivity) {
+                    viewModel.intValue.observe(viewLifecycleOwner) {
                         binding.tvValue.text = it.toString()
                         binding.tvValue.setTextColor(
                             if (it > 400) Color.RED else Color.BLACK
@@ -68,18 +81,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun tampilNotifikasi() {
         val notificationManager = ContextCompat.getSystemService(
-            this, NotificationManager::class.java)
-        notificationManager?.sendNotification(this)
+            requireContext(), NotificationManager::class.java)
+        notificationManager?.sendNotification(requireContext())
     }
 
     private fun logout() {
         user.signOut()
-        startActivity(Intent(this, AuthActivity::class.java))
-        finish()
+        startActivity(Intent(context, AuthActivity::class.java))
     }
 
     private fun confirmLogout() {
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(requireContext())
         builder.apply {
             setTitle("Logout")
             setMessage("Are you sure you want to logout?")
@@ -88,6 +100,18 @@ class MainActivity : AppCompatActivity() {
         }
         val dialog = builder.create()
         dialog.show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.option_menu, menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_histori) {
+            //nav to list
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

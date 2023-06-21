@@ -17,6 +17,7 @@ class AuthActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, LoginFragment.newInstance())
                 .commitNow()
+            this.finish()
         }
         user = FirebaseAuth.getInstance()
         checkUserIsLogged()
@@ -25,6 +26,7 @@ class AuthActivity : AppCompatActivity() {
     private fun checkUserIsLogged() {
         if (user.currentUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
+            this.finish()
         }
     }
 }
