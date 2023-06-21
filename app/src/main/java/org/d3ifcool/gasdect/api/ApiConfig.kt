@@ -14,7 +14,7 @@ class ApiConfig {
     companion object {
         private const val BASE_URL = "https://api.luckytruedev.com/gasdetec/"
         // API Data Gas
-        fun create(): ApiConfig {
+        fun create(): ApiService {
             val moshi = Moshi.Builder()
                 .add(NullSafeStandardJsonAdapters.FACTORY)
                 .add(NullSafeKotlinJsonAdapterFactory())
@@ -24,7 +24,7 @@ class ApiConfig {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .build()
-            return retrofit.create(ApiConfig::class.java)
+            return retrofit.create(ApiService::class.java)
         }
 
         // API NodeMCU

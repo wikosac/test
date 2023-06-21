@@ -22,12 +22,12 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("insertGasDetec.php")
-    fun createPeliharaan(
-        @Field("id_token") idtoken: String,
+    fun createHistori(
+        @Field("token") idtoken: String,
         @Field("time") time: String,
         @Field("gasvalue") gasvalue: String
     ): Call<ResponseHistori>
 
     @GET("getGasDetec.php")
-    fun getDataGas(@Query("id_token") id: String): Call<ResponseHistori>
+    fun getDataGas(@Query("token") id: String): Call<ResponseHistori>
 }
