@@ -1,8 +1,11 @@
 package org.d3ifcool.gasdect.ui
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import org.d3ifcool.gasdect.api.ApiConfig
+import org.d3ifcool.gasdect.model.ResponseHistori
+import org.d3ifcool.gasdect.ui.main.MainFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +48,20 @@ class MainViewModel() : ViewModel() {
             }
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
                 Log.e("testo", "onFailuree: ${t.message.toString()}")
+            }
+        })
+    }
+
+     fun inputHistory(token: String, time: String, gas: String){
+        val call = ApiConfig.create().createHistori(token, time, gas)
+        call.enqueue(object : Callback<ResponseHistori> {
+            override fun onResponse(call: Call<ResponseHistori>, response: Response<ResponseHistori>, ) {
+                Log.d("RETRO", "response : " + response.body().toString())
+                val kode = response.body()?.kode
+            }
+
+            override fun onFailure(call: Call<ResponseHistori>, t: Throwable) {
+                Log.e(MainFragment.TAG, "gagal tambah peliharaan!", t)
             }
         })
     }

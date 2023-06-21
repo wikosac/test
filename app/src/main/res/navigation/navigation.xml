@@ -9,5 +9,14 @@
         android:id="@+id/mainFragment"
         android:name="org.d3ifcool.gasdect.ui.main.MainFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_historiFragment"
+            app:destination="@id/historiFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historiFragment"
+        android:name="org.d3ifcool.gasdect.ui.histori.HistoriFragment"
+        android:label="@string/histori_kebocoran"
+        tools:layout="@layout/fragment_histori"/>
 </navigation>

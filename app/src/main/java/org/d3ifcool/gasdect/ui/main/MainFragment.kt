@@ -6,12 +6,14 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -19,10 +21,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.gasdect.R
+import org.d3ifcool.gasdect.api.ApiConfig
 import org.d3ifcool.gasdect.databinding.FragmentMainBinding
+import org.d3ifcool.gasdect.model.ResponseHistori
 import org.d3ifcool.gasdect.notify.NoificationUtils.sendNotification
 import org.d3ifcool.gasdect.ui.MainViewModel
 import org.d3ifcool.gasdect.ui.auth.LoginActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -35,6 +43,7 @@ class MainFragment : Fragment() {
 
     companion object{
         const val token = "9PWWYxhkSuCnr4OD3VoKrfCPx0WsC4O7"
+        const val TAG = "MainFragment"
     }
 
 
@@ -77,6 +86,8 @@ class MainFragment : Fragment() {
                         binding.tvValue.setTextColor(if (value > 400) Color.RED else Color.BLACK)
                         if (value > 400) {
                             tampilNotifikasi()
+                            val currentDateTime = getCurrentDateTimeAsString()
+                            viewModel.inputHistory(token, currentDateTime, value.toString())
                         }
                     }
                 }
@@ -86,6 +97,11 @@ class MainFragment : Fragment() {
         })
     }
 
+    fun getCurrentDateTimeAsString(): String {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        return dateFormat.format(calendar.time)
+    }
 
     private fun tampilNotifikasi() {
         val notificationManager = ContextCompat.getSystemService(
