@@ -7,7 +7,7 @@
     tools:context=".ui.MainActivity">
 
     <TextView
-        android:id="@+id/tv_value"
+        android:id="@+id/tvValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="value"
@@ -24,8 +24,18 @@
         android:text="@string/gas_caption"
         android:textSize="20sp"
         android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_value"
+        app:layout_constraintBottom_toTopOf="@+id/tvValue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:text="Log Out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvValue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

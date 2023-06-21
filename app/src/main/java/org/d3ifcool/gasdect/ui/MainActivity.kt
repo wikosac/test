@@ -1,21 +1,26 @@
 package org.d3ifcool.gasdect.ui
 
 import android.app.NotificationManager
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.gasdect.R
 import org.d3ifcool.gasdect.databinding.ActivityMainBinding
 import org.d3ifcool.gasdect.notify.NoificationUtils.sendNotification
+import org.d3ifcool.gasdect.ui.auth.AuthActivity
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var user: FirebaseAuth
     private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        user = FirebaseAuth.getInstance()
         viewModel.isConnected()
         viewModel.boolValue.observe(this) {
             if (it == true) {
@@ -30,6 +36,10 @@ class MainActivity : AppCompatActivity() {
             } else {
                 binding.tvValue.text = getString(R.string.not_connected)
             }
+        }
+
+        binding.logoutButton.setOnClickListener {
+           confirmLogout()
         }
     }
 
@@ -57,6 +67,24 @@ class MainActivity : AppCompatActivity() {
         val notificationManager = ContextCompat.getSystemService(
             this, NotificationManager::class.java)
         notificationManager?.sendNotification(this)
+    }
+
+    private fun logout() {
+        user.signOut()
+        startActivity(Intent(this, AuthActivity::class.java))
+        finish()
+    }
+
+    private fun confirmLogout() {
+        val builder = AlertDialog.Builder(this)
+        builder.apply {
+            setTitle("Logout")
+            setMessage("Are you sure you want to logout?")
+            setPositiveButton("Yes") { _, _ -> logout() }
+            setNegativeButton("No", null)
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 
 }
