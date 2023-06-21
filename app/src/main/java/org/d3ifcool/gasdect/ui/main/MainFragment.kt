@@ -22,7 +22,7 @@ import org.d3ifcool.gasdect.R
 import org.d3ifcool.gasdect.databinding.FragmentMainBinding
 import org.d3ifcool.gasdect.notify.NoificationUtils.sendNotification
 import org.d3ifcool.gasdect.ui.MainViewModel
-import org.d3ifcool.gasdect.ui.auth.AuthActivity
+import org.d3ifcool.gasdect.ui.auth.LoginActivity
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -91,7 +91,7 @@ class MainFragment : Fragment() {
 
     private fun logout() {
         user.signOut()
-        startActivity(Intent(context, AuthActivity::class.java))
+        startActivity(Intent(context, LoginActivity::class.java))
     }
 
     private fun confirmLogout() {
