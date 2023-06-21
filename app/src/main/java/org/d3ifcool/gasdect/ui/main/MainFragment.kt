@@ -1,37 +1,27 @@
 package org.d3ifcool.gasdect.ui.main
 
 import android.app.NotificationManager
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.gasdect.R
-import org.d3ifcool.gasdect.api.ApiConfig
 import org.d3ifcool.gasdect.databinding.FragmentMainBinding
-import org.d3ifcool.gasdect.model.ResponseHistori
 import org.d3ifcool.gasdect.notify.NoificationUtils.sendNotification
 import org.d3ifcool.gasdect.ui.MainViewModel
-import org.d3ifcool.gasdect.ui.auth.LoginActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
 
 class MainFragment : Fragment() {
 
@@ -66,10 +56,6 @@ class MainFragment : Fragment() {
             } else {
                 binding.tvValue.text = getString(R.string.not_connected)
             }
-        }
-
-        binding.logoutButton.setOnClickListener {
-            confirmLogout()
         }
     }
 
@@ -109,23 +95,6 @@ class MainFragment : Fragment() {
         val notificationManager = ContextCompat.getSystemService(
             requireContext(), NotificationManager::class.java)
         notificationManager?.sendNotification(requireContext())
-    }
-
-    private fun logout() {
-        user.signOut()
-        startActivity(Intent(context, LoginActivity::class.java))
-    }
-
-    private fun confirmLogout() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.apply {
-            setTitle("Logout")
-            setMessage("Are you sure you want to logout?")
-            setPositiveButton("Yes") { _, _ -> logout() }
-            setNegativeButton("No", null)
-        }
-        val dialog = builder.create()
-        dialog.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
