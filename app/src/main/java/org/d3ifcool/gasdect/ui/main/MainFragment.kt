@@ -74,6 +74,7 @@ class MainFragment : Fragment() {
     }
 
     private fun run() {
+        var isNotificationShown = false
         val handler = Handler(Looper.getMainLooper())
         handler.post(object : Runnable {
             override fun run() {
@@ -84,10 +85,11 @@ class MainFragment : Fragment() {
                     viewModel.intValue.observe(viewLifecycleOwner) { value ->
                         binding.tvValue.text = value.toString()
                         binding.tvValue.setTextColor(if (value > 400) Color.RED else Color.BLACK)
-                        if (value > 400) {
+                        if (value > 400 && !isNotificationShown) {
                             tampilNotifikasi()
                             val currentDateTime = getCurrentDateTimeAsString()
                             viewModel.inputHistory(token, currentDateTime, value.toString())
+                            isNotificationShown = true
                         }
                     }
                 }
