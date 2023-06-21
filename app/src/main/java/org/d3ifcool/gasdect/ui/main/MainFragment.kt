@@ -33,6 +33,10 @@ class MainFragment : Fragment() {
         ViewModelProvider(requireActivity())[MainViewModel::class.java]
     }
 
+    companion object{
+        const val token = "9PWWYxhkSuCnr4OD3VoKrfCPx0WsC4O7"
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +50,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         user = FirebaseAuth.getInstance()
-        viewModel.isConnected()
+        viewModel.isConnected(token)
         viewModel.boolValue.observe(viewLifecycleOwner) {
             if (it == true) {
                 run()

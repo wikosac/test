@@ -32,8 +32,8 @@ class MainViewModel() : ViewModel() {
         })
     }
 
-    fun isConnected() {
-        val client = ApiConfig.getApiService().isConnected("9PWWYxhkSuCnr4OD3VoKrfCPx0WsC4O7")
+    fun isConnected(token: String) {
+        val client = ApiConfig.getApiService().isConnected(token)
         client.enqueue(object : Callback<Boolean> {
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                 if (response.isSuccessful) {
