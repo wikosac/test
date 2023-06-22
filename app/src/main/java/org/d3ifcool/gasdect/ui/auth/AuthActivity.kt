@@ -25,6 +25,7 @@ class AuthActivity : AppCompatActivity() {
     private fun checkUserIsLogged() {
         if (user.currentUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 }

@@ -54,5 +54,7 @@ class LoginFragment : Fragment() {
 
     private fun toMain() {
         startActivity(Intent(requireContext(), MainActivity::class.java))
+        requireActivity().finish()
     }
+
 }
