@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
+    <TextView
+        android:id="@+id/not_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/not_connected"
+        android:textSize="28sp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"/>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="300dp"
@@ -13,6 +26,7 @@
         app:cardBackgroundColor="#E8E2E2"
         app:cardCornerRadius="150dp"
         app:cardElevation="10dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

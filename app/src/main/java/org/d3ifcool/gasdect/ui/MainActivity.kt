@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -34,7 +35,8 @@ class MainActivity : AppCompatActivity() {
             if (it == true) {
                 run()
             } else {
-                binding.tvValue.text = getString(R.string.not_connected)
+                binding.notConnect.visibility = View.VISIBLE
+                binding.cardView.visibility = View.INVISIBLE
             }
         }
 
