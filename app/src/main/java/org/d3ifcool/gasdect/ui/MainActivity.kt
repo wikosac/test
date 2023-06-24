@@ -12,7 +12,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
-import org.d3ifcool.gasdect.R
 import org.d3ifcool.gasdect.databinding.ActivityMainBinding
 import org.d3ifcool.gasdect.notify.NoificationUtils.sendNotification
 import org.d3ifcool.gasdect.ui.auth.AuthActivity

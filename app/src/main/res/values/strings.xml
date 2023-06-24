@@ -2,6 +2,13 @@
     <string name="app_name">GasDect</string>
     <string name="gas_caption">Gas Value (ppm) :</string>
     <string name="not_connected">Device is not connected!</string>
+    <string name="value">Value</string>
+    <string name="logout">Logout</string>
+    <string name="location">Location: Bandung</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="pass">Password</string>
+    <string name="register">Register</string>
 
     <string name="notif_title">Gas Bocor!</string>
     <string name="notif_message">Kebocoran gas terdeteksi!!</string>
