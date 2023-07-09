@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/not_connected"
         android:textSize="28sp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
