@@ -17,7 +17,7 @@ class ApiConfig {
                 chain.proceed(reqHeaders)
             }
             val client = OkHttpClient.Builder()
-                .addInterceptor(authInterceptor)
+//                .addInterceptor(authInterceptor)
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()

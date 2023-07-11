@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun run() {
+
+    fun run() {
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
