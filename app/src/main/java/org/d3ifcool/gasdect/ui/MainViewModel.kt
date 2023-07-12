@@ -2,6 +2,8 @@ package org.d3ifcool.gasdect.ui
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import org.d3ifcool.gasdect.api.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,6 +48,21 @@ class MainViewModel() : ViewModel() {
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
                 Log.e("testo", "onFailuree: ${t.message.toString()}")
             }
+        })
+    }
+
+    init {
+        checkToken()
+    }
+
+    private fun checkToken() {
+        val tokenTask = FirebaseMessaging.getInstance().token
+        tokenTask.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "FCM token failed.", task.exception)
+                return@OnCompleteListener
+            }
+            Log.d("FCM", "Token: ${task.result}")
         })
     }
 }
