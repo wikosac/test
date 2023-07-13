@@ -15,8 +15,8 @@ class MainViewModel() : ViewModel() {
     private val _boolValue = MutableLiveData<Boolean>()
     val boolValue: LiveData<Boolean> = _boolValue
 
-    fun getIntValue() {
-        val client = ApiConfig.getApiService().getValue("9PWWYxhkSuCnr4OD3VoKrfCPx0WsC4O7", "")
+    fun getIntValue(token: String) {
+        val client = ApiConfig.getApiService().getValue(token, "")
         client.enqueue(object : Callback<Int> {
             override fun onResponse(call: Call<Int>, response: Response<Int>) {
                 if (response.isSuccessful) {

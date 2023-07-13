@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.gasdect.databinding.ActivityMainBinding
 import org.d3ifcool.gasdect.notify.NoificationUtils.sendNotification
 import org.d3ifcool.gasdect.ui.auth.AuthActivity
+import org.d3ifcool.gasdect.ui.riwayat.RiwayatActivity
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +23,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var user: FirebaseAuth
     private val viewModel by viewModels<MainViewModel>()
+
+    companion object {
+        val token = "9PWWYxhkSuCnr4OD3VoKrfCPx0WsC4O7"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,11 @@ class MainActivity : AppCompatActivity() {
         binding.logoutButton.setOnClickListener {
            confirmLogout()
         }
+
+        binding.riwayatButton.setOnClickListener {
+            val intent = Intent(this, RiwayatActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
@@ -49,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                viewModel.getIntValue()
+                viewModel.getIntValue(token)
                 Handler(Looper.getMainLooper()).post {
                     viewModel.intValue.observe(this@MainActivity) {
                         binding.tvValue.text = it.toString()

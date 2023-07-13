@@ -14,6 +14,7 @@
     <string name="notif_message">Kebocoran gas terdeteksi!!</string>
     <string name="notif_channel_id" translatable="false">alert</string>
     <string name="notif_channel_name">Alert</string>
-    <string name="notif_channel_desc">Reminder check-in tiap beberapa jam.
-</string>
+    <string name="notif_channel_desc">Reminder check-in tiap beberapa jam.</string>
+    <string name="tidak_ada_data">Data kosong</string>
+    <string name="riwayat">Riwayat</string>
 </resources>
