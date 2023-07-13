@@ -1,13 +1,18 @@
 package org.d3ifcool.gasdect.notify
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
+import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import org.d3ifcool.gasdect.R
 import org.d3ifcool.gasdect.ui.MainActivity
 
@@ -45,7 +50,6 @@ object NoificationUtils {
                 enableLights(true)
                 lightColor = Color.RED
                 enableVibration(true)
-                description = context.getString(R.string.notif_channel_desc)
             }
             val manager = context.getSystemService(NotificationManager::class.java)
             manager?.createNotificationChannel(notificationChannel)
