@@ -16,6 +16,7 @@ import org.d3ifcool.gasdect.databinding.ActivityMainBinding
 import org.d3ifcool.gasdect.notify.NoificationUtils.sendNotification
 import org.d3ifcool.gasdect.ui.auth.AuthActivity
 import org.d3ifcool.gasdect.ui.riwayat.RiwayatActivity
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val token = "9PWWYxhkSuCnr4OD3VoKrfCPx0WsC4O7"
+        const val TAG = "MainActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,17 +70,25 @@ class MainActivity : AppCompatActivity() {
                         )
                         if (it > 400) {
                             tampilNotifikasi()
+                            val currentDateTime = getCurrentDateTimeAsString()
+                            viewModel.inputHistory(token, currentDateTime, it.toString())
                         }
                     }
                 }
             }
-        }, 0, 1000)
+        }, 0, 3000)
     }
 
     private fun tampilNotifikasi() {
         val notificationManager = ContextCompat.getSystemService(
             this, NotificationManager::class.java)
         notificationManager?.sendNotification(this)
+    }
+
+    fun getCurrentDateTimeAsString(): String {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        return dateFormat.format(calendar.time)
     }
 
     private fun logout() {
