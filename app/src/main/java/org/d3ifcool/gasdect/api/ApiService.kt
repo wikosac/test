@@ -16,3 +16,8 @@ interface ApiService {
         @Query("token") token: String
     ) : Call<Boolean>
 }
+
+interface ApiService2 {
+    @GET("sendNotification")
+    fun sendNotification(): Call<String>
+}

@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 import org.d3ifcool.gasdect.databinding.ActivityMainBinding
 import org.d3ifcool.gasdect.notify.NoificationUtils.sendNotification
 import org.d3ifcool.gasdect.ui.auth.AuthActivity
@@ -28,8 +29,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        FirebaseMessaging.getInstance().subscribeToTopic("api_response_value")
+
         user = FirebaseAuth.getInstance()
-        viewModel.isConnected()
         viewModel.boolValue.observe(this) {
             if (it == true) {
                 run()
@@ -48,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                viewModel.getIntValue()
                 Handler(Looper.getMainLooper()).post {
                     viewModel.intValue.observe(this@MainActivity) {
                         binding.tvValue.text = it.toString()

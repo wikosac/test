@@ -9,7 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ApiConfig {
     companion object {
         fun getApiService(): ApiService {
-            val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            val loggingInterceptor =
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             val authInterceptor = Interceptor { chain ->
                 val req = chain.request()
                 val reqHeaders = req.newBuilder()
@@ -26,6 +27,27 @@ class ApiConfig {
                 .client(client)
                 .build()
             return retrofit.create(ApiService::class.java)
+        }
+
+        fun getCloudFunctions(): ApiService2 {
+            val loggingInterceptor =
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            val authInterceptor = Interceptor { chain ->
+                val req = chain.request()
+                val reqHeaders = req.newBuilder()
+                    .build()
+                chain.proceed(reqHeaders)
+            }
+            val client = OkHttpClient.Builder()
+                .addInterceptor(authInterceptor)
+                .addInterceptor(loggingInterceptor)
+                .build()
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://us-central1-gas-monitor-6692b.cloudfunctions.net/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+            return retrofit.create(ApiService2::class.java)
         }
     }
 }
